@@ -1,15 +1,15 @@
 {
   "name": "styled-chroma",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A flexible styling library for modern web applications.",
   "type": "module",
   "main": "dist/styled-chroma.cjs.js",
-  "module": "dist/styled-chroma.esm.js",
+  "module": "dist/styled-chroma.es.js",
   "browser": "dist/styled-chroma.umd.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/styled-chroma.esm.js",
+      "import": "./dist/styled-chroma.es.js",
       "require": "./dist/styled-chroma.cjs.js",
       "types": "./dist/index.d.ts"
     }
