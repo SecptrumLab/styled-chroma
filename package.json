@@ -1,7 +1,7 @@
 {
   "name": "styled-chroma",
-  "version": "0.1.0",
-  "description": "A powerful and flexible styling library for modern web applications.",
+  "version": "0.1.1",
+  "description": "A flexible styling library for modern web applications.",
   "type": "module",
   "main": "dist/styled-chroma.js",
   "module": "dist/styled-chroma.esm.js",
@@ -27,14 +27,16 @@
     "url": "git+https://github.com/SecptrumLab/styled-chroma.git"
   },
   "keywords": [
-    "styling"
+    "styling",
+    "css-in-js",
+    "react"
   ],
   "author": "Rapheal Chizitere",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/SecptrumLab/styled-chroma/issues"
   },
-  "homepage": "https://github.com/SecptrumLab/styled-chroma#readme",
+  "homepage": "https://github.com/SecptrumLab/styled-chroma/wiki",
   "devDependencies": {
     "@babel/preset-env": "^7.25.7",
     "@babel/preset-react": "^7.25.7",
