@@ -8,9 +8,9 @@ A powerful and flexible styling library for modern web applications.
 - [Features](#features)
 - [Usage](#usage)
 - [API Reference](#api-reference)
-- [Contributing](#contributing)
 - [License](#license)
 - [Issues](#issues)
+- [Contributing](#contributing)
 - [Acknowledgments](#acknowledgments)
 
 ## Installation
@@ -29,9 +29,11 @@ yarn add styled-chroma
 
 ## Features
 
-- [Feature 1]
-- [Feature 2]
-- [Feature 3]
+- Intuitive API similar to styled-components
+- Type-safe styling with TypeScript support
+- Performance optimized with minimal runtime overhead
+<!-- - Server-side rendering (SSR) support -->
+- Automatic vendor prefixing for cross-browser compatibility
 
 ## Usage
 
@@ -67,10 +69,6 @@ The `styled` function is the core function for creating styled components. It ta
 
 ### `styled('div')`, `styled('span')`, etc.
 
-## Contributing
-
-We welcome contributions to styled-chroma! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
-
 ## License
 
 This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for more details.
@@ -79,9 +77,15 @@ This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE
 
 If you find any issues, please open an issue on the [GitHub repository](https://github.com/SecptrumLab/styled-chroma/issues).
 
+## Contributing
+
+We welcome contributions to styled-chroma! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+
+For more detailed information on how to contribute, please read our [CONTRIBUTING.md](CONTRIBUTING.md) guide.
+
 ## Acknowledgments
 
 - [React](https://reactjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
-- [Webpack](https://webpack.js.org/)
+- [Rollup](https://rollupjs.org/)
 - [Babel](https://babeljs.io/)
