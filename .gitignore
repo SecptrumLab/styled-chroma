@@ -1,3 +1,4 @@
 /node_modules
 /dist
-.bundle-analysis.html
+bundle-analysis.html
+theme.md
