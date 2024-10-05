@@ -1,6 +1,6 @@
 # styled-chroma
 
-A powerful and flexible styling library for modern web applications.
+A flexible styling library for modern web applications.
 
 ## Table of Contents
 
