@@ -29,11 +29,14 @@ yarn add styled-chroma
 
 ## Features
 
-- Intuitive API similar to styled-components
+- Intuitive API for easy styling
 - Type-safe styling with TypeScript support
 - Performance optimized with minimal runtime overhead
-<!-- - Server-side rendering (SSR) support -->
+- Customizable and extendable
 - Automatic vendor prefixing for cross-browser compatibility
+- No dependencies on external libraries
+- Filters invalid props from being passed to the DOM
+- Supports dynamic styling based on props
 
 ## Usage
 
