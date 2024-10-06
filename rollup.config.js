@@ -52,17 +52,7 @@ export default {
       exclude: "node_modules/**",
       babelHelpers: "bundled",
     }),
-    terser({
-      compress: {
-        drop_console: true,
-      },
-      mangle: {
-        toplevel: true,
-      },
-      output: {
-        comments: false,
-      },
-    }), // Minify the output
+    terser(), // Minify the output
     visualizer({ open: true, filename: "bundle-analysis.html" }),
   ],
   external: ["react", "react-dom"],
