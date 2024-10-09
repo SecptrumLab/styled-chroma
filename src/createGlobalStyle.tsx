@@ -1,3 +1,4 @@
+import React from "react";
 import css from "./utils/css";
 
 /**
@@ -26,10 +27,49 @@ const createGlobalStyle = (
   if (typeof window !== "undefined" && document) {
     document.head.appendChild(styleElement);
 
-    return () => {
-      document.head.removeChild(styleElement);
-    };
+    // return () => {
+    //   document.head.removeChild(styleElement);
+    // };
   }
+
+  return () => {
+    /**
+     * A React component that applies global styles to the document.
+     * This component uses useEffect to append and remove a style element from the document head.
+     *
+     * @returns {React.FC} A React functional component that renders nothing (null) but applies global styles.
+     *
+     * @example
+     * const GlobalStyles = createGlobalStyle`
+     *   body {
+     *     margin: 0;
+     *     padding: 0;
+     *   }
+     * `;
+     *
+     *  const App = () => {
+     *    return (
+     *      <>
+     *        <GlobalStyles />
+     *      </>
+     *    );
+     *  }
+     **/
+    const GlobalStyles = () => {
+      React.useEffect(() => {
+        if (typeof window !== "undefined" && document) {
+          document.head.appendChild(styleElement);
+          return () => {
+            document.head.removeChild(styleElement);
+          };
+        }
+      }, []);
+
+      return null;
+    };
+
+    return <GlobalStyles />;
+  };
 };
 
 export default createGlobalStyle;

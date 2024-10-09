@@ -1,6 +1,7 @@
 import React from "react";
 import { styleSheetManager } from "./utils/StyleSheetManger";
 import { StandardProperties } from "./types";
+
 type ExtendedProperties = StandardProperties & {
   [key: string]: ExtendedProperties | string | number | undefined;
 };
