@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { styleSheetManager } from "./utils/StyleSheetManger";
+// import { styleSheetManager } from "./utils/StyleSheetManger";
+import { styleSheetManager } from "./utils/SSR-Sheet";
 import { useTheme } from "./hooks/useTheme";
 import { generateRandomString } from "./utils/genString";
 import { StandardProperties } from "./types";
