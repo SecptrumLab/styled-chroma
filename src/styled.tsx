@@ -1,25 +1,31 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { styleSheetManager } from "./utils/StyleSheetManger";
+import { useTheme } from "./hooks/useTheme";
+import { generateRandomString } from "./utils/genString";
 import { StandardProperties } from "./types";
 
 type ExtendedProperties = StandardProperties & {
   [key: string]: ExtendedProperties | string | number | undefined;
 };
-type Interpolation =
+type Theme = Record<string, any>;
+type Interpolation<P> =
   | string
   | number
   | ExtendedProperties
-  | ((props: any) => string | number);
+  | ((props: P & { theme: Theme }) => string | number);
 
-type StyledFunction = <
-  Tag extends keyof JSX.IntrinsicElements,
-  CustomProps = {}
->(
-  tag: Tag
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+type StyledFunction = <P extends object = {}>(
+  tag: keyof JSX.IntrinsicElements | React.ComponentType<P>
 ) => (
   strings: TemplateStringsArray,
-  ...interpolations: Array<Interpolation>
-) => React.FC<JSX.IntrinsicElements[Tag] & CustomProps>;
+  ...interpolations: Array<Interpolation<P>>
+) => //Add theme to props and all other props
+React.ForwardRefExoticComponent<
+  P & { theme?: Theme } & React.HTMLAttributes<HTMLElement> &
+    Record<string, any>
+>;
 
 const parseStyles = (css: string, props: any): ExtendedProperties => {
   const result: ExtendedProperties = {};
@@ -94,23 +100,30 @@ const generateStyleString = (
  * // Usage:
  * <Button onClick={() => console.log('Clicked!')}>Click me</Button>
  */
-
-const styled: StyledFunction = (tag: keyof JSX.IntrinsicElements) => {
+//@ts-expect-error theme is not defined
+const styled: StyledFunction = <P extends object>(
+  tag: keyof JSX.IntrinsicElements | React.ComponentType<any>
+) => {
+  type Props = React.ComponentProps<typeof tag>;
   return (
     strings: TemplateStringsArray,
-    ...interpolations: Array<Interpolation>
+    ...interpolations: Array<Interpolation<P>>
   ) => {
-    return React.forwardRef((props: any, ref) => {
+    return React.forwardRef<
+      unknown,
+      P & { theme?: Theme } & Record<string, any>
+    >((props: Props, ref) => {
+      const { theme } = useTheme();
       const css = strings.reduce((acc, str, i) => {
         const interpolation = interpolations[i];
         if (typeof interpolation === "function") {
-          return acc + str + interpolation(props);
+          return acc + str + interpolation({ ...props, theme });
         }
         return acc + str + (interpolation || "");
       }, "");
 
       const styles = parseStyles(css, props);
-      const className = `css-${Math.random().toString(36).substr(2, 7)}`;
+      const className = `css-${generateRandomString()}`;
       const styleString = `.${className} { ${generateStyleString(styles)} }`;
       styleSheetManager.addStyle(styleString);
 
@@ -142,12 +155,21 @@ const styled: StyledFunction = (tag: keyof JSX.IntrinsicElements) => {
         { prefixedProps: {}, remainingProps: {} }
       );
 
-      return React.createElement(tag, {
-        ...prefixedProps,
-        ...remainingProps,
-        ref,
-        className: `${className} ${props.className || ""}`,
-      });
+      if (typeof tag === "string") {
+        return React.createElement(tag, {
+          ...prefixedProps,
+          ...remainingProps,
+          ref,
+          className: `${className} ${props.className || ""}`,
+        });
+      } else {
+        return React.createElement(tag, {
+          // ...prefixedProps,
+          ...remainingProps,
+          ref,
+          className: `${className} ${props.className || ""}`,
+        });
+      }
     });
   };
 };

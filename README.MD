@@ -1,12 +1,14 @@
 # styled-chroma
 
-A flexible styling library for modern web applications.
+A flexible styling library for React application.
 
 ## Table of Contents
 
 - [Installation](#installation)
 - [Features](#features)
 - [Usage](#usage)
+- [Using With Types](#using-with-types)
+- [Exported Types](#exported-types)
 - [API Reference](#api-reference)
 - [License](#license)
 - [Issues](#issues)
@@ -55,6 +57,183 @@ const Button = styled("button")`
 
 export default Button;
 ```
+
+## Using With Types
+
+styled-chroma is fully compatible with TypeScript and provides type definitions for all HTML elements. Here's how you can use it with types:
+
+1. Basic usage with inferred types:
+
+```tsx
+import styled from "styled-chroma";
+
+const Button = styled("button")`
+  background-color: blue;
+  color: white;
+  padding: 10px 20px;
+`;
+
+// Button will automatically have the correct HTML button element props
+```
+
+2. Extending HTML element props:
+
+```tsx
+import { styled } from "styled-chroma";
+import { ButtonProps } from "styled-chroma/dist/types";
+
+interface CustomButtonProps extends ButtonProps {
+  isActive?: boolean;
+}
+
+const Button = styled<CustomButtonProps>("button")`
+  background-color: ${(props) => (props.isActive ? "blue" : "gray")};
+  color: white;
+  padding: 10px 20px;
+`;
+
+// Usage
+<Button isActive={true} onClick={() => console.log("Clicked!")}>
+  Click me
+</Button>;
+```
+
+3. Using with custom components:
+
+```tsx
+import styled from "styled-chroma";
+import { ComponentProps } from "react";
+
+const CustomComponent = ({
+  className,
+  children,
+}: {
+  className?: string;
+  children: React.ReactNode;
+}) => <div className={className}>{children}</div>;
+
+interface StyledCustomComponentProps
+  extends ComponentProps<typeof CustomComponent> {
+  backgroundColor?: string;
+}
+
+const StyledCustomComponent = styled(
+  CustomComponent
+)<StyledCustomComponentProps>`
+  background-color: ${(props) => props.backgroundColor || "white"};
+  padding: 20px;
+`;
+
+// Usage
+<StyledCustomComponent backgroundColor="lightblue">
+  Custom styled component
+</StyledCustomComponent>;
+```
+
+By leveraging TypeScript with styled-chroma, you get full type checking for your styled components, including autocomplete for HTML attributes and custom props.
+
+## Exported Types
+
+styled-chroma exports type definitions for all HTML elements. You can import these types from `styled-chroma/dist/types`. Here's a list of all exported types:
+
+- `ButtonProps`
+- `AnchorProps`
+- `InputProps`
+- `TextareaProps`
+- `SelectProps`
+- `FormProps`
+- `ImageProps`
+- `DivProps`
+- `SpanProps`
+- `ParagraphProps`
+- `ListItemProps`
+- `UnorderedListProps`
+- `OrderedListProps`
+- `TableProps`
+- `TableRowProps`
+- `TableCellProps`
+- `HeaderProps`
+- `LabelProps`
+- `ArticleProps`
+- `SectionProps`
+- `NavProps`
+- `AsideProps`
+- `FooterProps`
+- `MainProps`
+- `AddressProps`
+- `AudioProps`
+- `VideoProps`
+- `CanvasProps`
+- `EmbedProps`
+- `IFrameProps`
+- `ObjectProps`
+- `PictureProps`
+- `SourceProps`
+- `TrackProps`
+- `DetailsProps`
+- `DialogProps`
+- `MenuProps`
+- `SummaryProps`
+- `DataProps`
+- `TimeProps`
+- `VarProps`
+- `CodeProps`
+- `PreProps`
+- `BlockquoteProps`
+- `CiteProps`
+- `DelProps`
+- `InsProps`
+- `KbdProps`
+- `MarkProps`
+- `QProps`
+- `SProps`
+- `SampProps`
+- `StrongProps`
+- `SubProps`
+- `SupProps`
+- `WbrProps`
+- `AreaProps`
+- `MapProps`
+- `ColProps`
+- `ColGroupProps`
+- `CaptionProps`
+- `THeadProps`
+- `TBodyProps`
+- `TFootProps`
+- `ThProps`
+- `FieldsetProps`
+- `LegendProps`
+- `DatalistProps`
+- `OptGroupProps`
+- `OptionProps`
+- `OutputProps`
+- `ProgressProps`
+- `MeterProps`
+- `HtmlProps`
+- `HeadProps`
+- `BaseProps`
+- `MetaProps`
+- `ScriptProps`
+- `NoScriptProps`
+- `TemplateProps`
+- `SlotProps`
+
+You can use these types to extend the props of your styled components or to type-check your components. For example:
+
+```tsx
+import styled from "styled-chroma";
+import { ButtonProps } from "styled-chroma/types";
+
+interface CustomButtonProps extends ButtonProps {
+  isActive?: boolean;
+}
+
+const Button = styled<CustomButtonProps>("button")`
+  // ... styles ...
+`;
+```
+
+This ensures type safety and provides autocompletion for all standard HTML attributes plus your custom props.
 
 ## API Reference
 

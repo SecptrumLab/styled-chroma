@@ -1,7 +1,7 @@
 {
   "name": "styled-chroma",
-  "version": "0.1.55",
-  "description": "A flexible styling library for modern web applications.",
+  "version": "0.1.56",
+  "description": "A flexible styling library for React application.",
   "type": "module",
   "main": "dist/styled-chroma.cjs.js",
   "module": "dist/styled-chroma.es.js",
@@ -47,7 +47,6 @@
     "@rollup/plugin-typescript": "^12.1.0",
     "@types/react": "^18.3.11",
     "copyfiles": "^2.4.1",
-    "csstype": "^3.1.3",
     "rollup": "^4.24.0",
     "rollup-plugin-delete": "^2.1.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",

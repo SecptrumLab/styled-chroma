@@ -1,3 +1,18 @@
+/**
+ * Color palette object containing various color schemes.
+ *
+ * @typedef {Object} Colors
+ * @property {Object} primary - Shades of blue for primary color scheme.
+ * @property {Object} tertiary - Shades of yellow for tertiary color scheme.
+ * @property {Object} neutral - Neutral color shades from white to black.
+ * @property {Object} gray - Shades of gray.
+ *
+ * Each color object contains keys from 50 to 900 (or 950 for some),
+ * representing different shades of the color from lightest to darkest.
+ *
+ * @type {Colors}
+ */
+
 const colors = {
   primary: {
     50: "#E3F2FD",
@@ -285,3 +300,14 @@ const colors = {
 };
 
 export default colors;
+
+export const modeColors = {
+  light: {
+    primary: "#000",
+    secondary: "#fff",
+  },
+  dark: {
+    primary: "#fff",
+    secondary: "#000",
+  },
+};
