@@ -5,6 +5,7 @@ import { styleSheetManager } from "./utils/SSR-Sheet";
 import { useTheme } from "./hooks/useTheme";
 import { generateRandomString } from "./utils/genString";
 import { StandardProperties } from "./types";
+// import { Theme } from "./types/local";
 
 type ExtendedProperties = StandardProperties & {
   [key: string]: ExtendedProperties | string | number | undefined;
@@ -124,7 +125,7 @@ const styled: StyledFunction = <P extends object>(
       }, "");
 
       const styles = parseStyles(css, props);
-      const className = `css-${generateRandomString()}`;
+      const className = `css-${generateRandomString(10)}`;
       const styleString = `.${className} { ${generateStyleString(styles)} }`;
       styleSheetManager.addStyle(styleString);
 

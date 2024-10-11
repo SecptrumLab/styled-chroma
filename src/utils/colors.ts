@@ -13,7 +13,7 @@
  * @type {Colors}
  */
 
-const colors = {
+export const colors = {
   primary: {
     50: "#E3F2FD",
     100: "#BBDEFB",
@@ -299,15 +299,13 @@ const colors = {
   },
 };
 
-export default colors;
-
 export const modeColors = {
   light: {
-    primary: "#000",
-    secondary: "#fff",
+    text: "#000",
+    background: "#fff",
   },
   dark: {
-    primary: "#fff",
-    secondary: "#000",
+    text: "#fff",
+    background: "#000",
   },
 };
