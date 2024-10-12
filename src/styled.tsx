@@ -3,7 +3,7 @@ import React from "react";
 import { StandardProperties } from "./types";
 import { useTheme } from "./hooks/useTheme";
 import { generateRandomString } from "./utils/genString";
-import { validMediaProps } from "./utils/props";
+import { validElementProps } from "./utils/props";
 import { styleSheetManager } from "./utils/SSR-Sheet";
 
 type ExtendedProperties = StandardProperties & {
@@ -144,9 +144,7 @@ const styled: StyledFunction = <P extends object>(
         (acc, [key, value]) => {
           if (
             key !== "children" &&
-            key !== "className" &&
-            key !== "ref" &&
-            !validMediaProps.includes(key) &&
+            !validElementProps.includes(key) &&
             !key.startsWith("data-") &&
             !validProps.includes(key)
           ) {

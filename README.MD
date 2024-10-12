@@ -1,6 +1,27 @@
-# styled-chroma
+---
 
-A flexible styling library for React.
+<div align="center">
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a71166b5-8c14-4c83-8cb8-0ca17478bde2" alt="Styled Chroma Logo" width="200" height="200">
+  <h4> A cutting-edge styling library for React that brings simplicity and power to your component design </h4>
+</p>
+
+[![GitHub stars](https://img.shields.io/github/stars/SecptrumLab/styled-chroma.svg?style=social&label=Star)](https://github.com/SecptrumLab/styled-chroma)
+[![npm version](https://img.shields.io/npm/v/styled-chroma.svg)](https://www.npmjs.com/package/styled-chroma)
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/styled-chroma)](https://bundlephobia.com/result?p=styled-chroma)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/SecptrumLab/styled-chroma/blob/main/LICENSE)
+[![module formats](https://img.shields.io/badge/module%20formats-ESM%2FCJS%2FUMD-blue)](https://www.npmjs.com/package/styled-chroma)
+
+[Documentation](https://github.com/SecptrumLab/styled-chroma/wiki) | [API Reference](https://github.com/SecptrumLab/styled-chroma#api-reference) | [Contributing](https://github.com/SecptrumLab/styled-chroma/blob/main/CONTRIBUTING.MD) | [Issues](https://github.com/SecptrumLab/styled-chroma/issues)
+
+</div>
+
+<p align="center">
+  <sub>Built with ❤️ by the Secptrum Lab team. Licensed under the Apache License 2.0.</sub>
+</p>
+
+##
 
 ## Table of Contents
 
@@ -45,7 +66,7 @@ yarn add styled-chroma
 Basic example:
 
 ```tsx
-import styled from "styled-chroma";
+import { styled } from "styled-chroma";
 
 const Button = styled("button")`
   background-color: blue;
@@ -65,7 +86,7 @@ styled-chroma is fully compatible with TypeScript and provides type definitions 
 1. Basic usage with inferred types:
 
 ```tsx
-import styled from "styled-chroma";
+import { styled } from "styled-chroma";
 
 const Button = styled("button")`
   background-color: blue;
@@ -80,9 +101,8 @@ const Button = styled("button")`
 
 ```tsx
 import { styled } from "styled-chroma";
-import { ButtonProps } from "styled-chroma/dist/types";
 
-interface CustomButtonProps extends ButtonProps {
+interface CustomButtonProps {
   isActive?: boolean;
 }
 
@@ -93,7 +113,7 @@ const Button = styled<CustomButtonProps>("button")`
 `;
 
 // Usage
-<Button isActive={true} onClick={() => console.log("Clicked!")}>
+<Button isActive onClick={() => console.log("Clicked!")}>
   Click me
 </Button>;
 ```
@@ -101,7 +121,7 @@ const Button = styled<CustomButtonProps>("button")`
 3. Using with custom components:
 
 ```tsx
-import styled from "styled-chroma";
+import { styled } from "styled-chroma";
 import { ComponentProps } from "react";
 
 const CustomComponent = ({
@@ -112,14 +132,16 @@ const CustomComponent = ({
   children: React.ReactNode;
 }) => <div className={className}>{children}</div>;
 
+// Use ComponentProps to inherit props from the custom component.
+// Only extend props when adding style to an existing component.
 interface StyledCustomComponentProps
   extends ComponentProps<typeof CustomComponent> {
   backgroundColor?: string;
 }
 
-const StyledCustomComponent = styled(
+const StyledCustomComponent = styled<StyledCustomComponentProps>(
   CustomComponent
-)<StyledCustomComponentProps>`
+)`
   background-color: ${(props) => props.backgroundColor || "white"};
   padding: 20px;
 `;
@@ -221,8 +243,7 @@ styled-chroma exports type definitions for all HTML elements. You can import the
 You can use these types to extend the props of your styled components or to type-check your components. For example:
 
 ```tsx
-import styled from "styled-chroma";
-import { ButtonProps } from "styled-chroma/types";
+import { styled, ButtonProps } from "styled-chroma";
 
 interface CustomButtonProps extends ButtonProps {
   isActive?: boolean;
