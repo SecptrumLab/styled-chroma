@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-// import { styleSheetManager } from "./utils/StyleSheetManger";
-import { styleSheetManager } from "./utils/SSR-Sheet";
+import { StandardProperties } from "./types";
 import { useTheme } from "./hooks/useTheme";
 import { generateRandomString } from "./utils/genString";
-import { StandardProperties } from "./types";
-// import { Theme } from "./types/local";
+import { validMediaProps } from "./utils/props";
+import { styleSheetManager } from "./utils/SSR-Sheet";
 
 type ExtendedProperties = StandardProperties & {
   [key: string]: ExtendedProperties | string | number | undefined;
@@ -58,6 +57,12 @@ const parseStyles = (css: string, props: any): ExtendedProperties => {
   return result;
 };
 
+/**
+ * Generates a style string from a styles object.
+ * @param {ExtendedProperties} styles - The styles object to be converted to a string.
+ * @param {string} [selector] - The selector to be used for the styles.
+ * @returns {string} The generated style string.
+ */
 const generateStyleString = (
   styles: ExtendedProperties,
   selector: string = ""
@@ -131,7 +136,7 @@ const styled: StyledFunction = <P extends object>(
 
       const validProps = Object.keys((tag as any).propTypes || {});
 
-      // Handle props
+      //Filter out valid props and add the rest to remainingProps
       const { prefixedProps, remainingProps } = Object.entries(props).reduce<{
         prefixedProps: Record<string, any>;
         remainingProps: Record<string, any>;
@@ -141,6 +146,7 @@ const styled: StyledFunction = <P extends object>(
             key !== "children" &&
             key !== "className" &&
             key !== "ref" &&
+            !validMediaProps.includes(key) &&
             !key.startsWith("data-") &&
             !validProps.includes(key)
           ) {
@@ -157,19 +163,23 @@ const styled: StyledFunction = <P extends object>(
         { prefixedProps: {}, remainingProps: {} }
       );
 
+      const sc = `sc-${
+        typeof tag === "string" ? tag : tag.displayName || "Component"
+      }`;
+      const combinedClassName = `${className} ${props.className || sc}`;
+
       if (typeof tag === "string") {
         return React.createElement(tag, {
           ...prefixedProps,
           ...remainingProps,
           ref,
-          className: `${className} ${props.className || ""}`,
+          className: combinedClassName,
         });
       } else {
         return React.createElement(tag, {
-          // ...prefixedProps,
-          ...remainingProps,
+          ...props,
           ref,
-          className: `${className} ${props.className || ""}`,
+          className: combinedClassName,
         });
       }
     });

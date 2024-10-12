@@ -1,6 +1,6 @@
 # styled-chroma
 
-A flexible styling library for React application.
+A flexible styling library for React.
 
 ## Table of Contents
 

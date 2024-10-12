@@ -1,7 +1,7 @@
 {
   "name": "styled-chroma",
-  "version": "0.1.58",
-  "description": "A flexible styling library for React application.",
+  "version": "0.1.59",
+  "description": "A flexible styling library for React",
   "type": "module",
   "main": "dist/styled-chroma.cjs.js",
   "module": "dist/styled-chroma.es.js",
