@@ -30,10 +30,11 @@ export default {
     {
       file: pkg.browser,
       format: "umd",
-      name: "StyledChroma",
+      name: "styled",
       globals: {
         react: "React",
         "react-dom": "ReactDOM",
+        "react/jsx-runtime": "jsxRuntime",
       },
       sourcemap: true,
       exports: "named",
@@ -52,8 +53,9 @@ export default {
       exclude: "node_modules/**",
       babelHelpers: "bundled",
     }),
-    terser(), // Minify the output
+    // Minify the output
+    terser(),
     visualizer({ open: true, filename: "bundle-analysis.html" }),
   ],
-  external: ["react", "react-dom"],
+  external: ["react", "react-dom", "react/jsx-runtime"],
 };
