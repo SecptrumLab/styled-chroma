@@ -22,7 +22,7 @@
     "build": "rollup -c",
     "postbuild": "copyfiles -u 1 src/types/**/* dist/",
     "prerelease": "npx tsc --noEmit",
-    "release": "npm version patch && git push origin master --follow-tags"
+    "release": "npm version patch && git push origin main --follow-tags"
   },
   "repository": {
     "type": "git",
