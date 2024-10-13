@@ -4,7 +4,7 @@ class StyleSheetManager {
   private styleSheet: CSSStyleSheet | null = null;
 
   constructor() {
-    this.isServer = typeof window === "undefined";
+    this.isServer = typeof window === 'undefined';
     if (!this.isServer) {
       this.initBrowserStyleSheet();
     }
@@ -36,12 +36,26 @@ class StyleSheetManager {
   }
 
   getStylesAsString(): string {
-    return Array.from(this.styles).join("\n");
+    return Array.from(this.styles).join('\n');
+  }
+
+  /**
+   * collect styles for the next render
+   */
+  collectStyles(): string {
+    return this.getStylesAsString();
+  }
+
+  /**
+   * reset styles for the next render
+   */
+  resetStyles(): void {
+    this.clearStyles();
   }
 
   private initBrowserStyleSheet(): void {
     if (document) {
-      const style = document.createElement("style");
+      const style = document.createElement('style');
       document.head.appendChild(style);
       this.styleSheet = style.sheet;
     }
