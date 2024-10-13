@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Add "use client" to all files in the Next.js build
-const nextJsDir = path.join(__dirname, '../dist');
+const nextJsDir = path.join(__dirname, '../dist/styled.d.ts');
 
 function addUseClientToFiles(dir) {
   const files = fs.readdirSync(dir);

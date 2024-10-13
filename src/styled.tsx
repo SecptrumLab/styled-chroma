@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
-import { StandardProperties } from "./types";
-import { useTheme } from "./hooks/useTheme";
-import { generateRandomString } from "./utils/genString";
-import { validElementProps } from "./utils/props";
-import { styleSheetManager } from "./utils/SSR-Sheet";
+import React, { useMemo } from 'react';
+import { StandardProperties } from './types';
+import { useTheme } from './hooks/useTheme';
+import { generateRandomString } from './utils/genString';
+import { validElementProps } from './utils/props';
+import { styleSheetManager } from './utils/SSR-Sheet';
+import { useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';
+import { cls } from './utils/className';
 
 type ExtendedProperties = StandardProperties & {
   [key: string]: ExtendedProperties | string | number | undefined;
@@ -37,19 +39,19 @@ const parseStyles = (css: string, props: any): ExtendedProperties => {
     rule = rule.trim();
     if (!rule) return;
 
-    if (rule.includes("{")) {
-      const [selector, styles] = rule.split("{");
+    if (rule.includes('{')) {
+      const [selector, styles] = rule.split('{');
       currentObj[selector.trim()] = {};
       stack.push(currentObj);
       currentObj = currentObj[selector.trim()] as ExtendedProperties;
       Object.assign(currentObj, parseStyles(styles, props));
-    } else if (rule === "}") {
+    } else if (rule === '}') {
       currentObj = stack.pop() || result;
     } else {
-      const [key, value] = rule.split(":").map((s) => s.trim());
+      const [key, value] = rule.split(':').map((s) => s.trim());
       if (key && value) {
         currentObj[key] =
-          typeof value === "function" ? value ?? props : value.replace(";", "");
+          typeof value === 'function' ? value ?? props : value.replace(';', '');
       }
     }
   });
@@ -65,16 +67,16 @@ const parseStyles = (css: string, props: any): ExtendedProperties => {
  */
 const generateStyleString = (
   styles: ExtendedProperties,
-  selector: string = ""
+  selector: string = ''
 ): string => {
-  let styleString = "";
+  let styleString = '';
   Object.entries(styles).forEach(([key, value]) => {
-    if (typeof value === "object") {
-      if (key.startsWith("@media")) {
+    if (typeof value === 'object') {
+      if (key.startsWith('@media')) {
         styleString += `${key} { ${generateStyleString(value, selector)} }`;
       } else {
         const newSelector = selector
-          ? key.startsWith("&")
+          ? key.startsWith('&')
             ? selector + key.slice(1)
             : `${selector} ${key}`
           : key;
@@ -121,18 +123,31 @@ const styled: StyledFunction = <P extends object>(
       P & { theme?: Theme } & Record<string, any>
     >((props: Props, ref) => {
       const { theme } = useTheme();
-      const css = strings.reduce((acc, str, i) => {
-        const interpolation = interpolations[i];
-        if (typeof interpolation === "function") {
-          return acc + str + interpolation({ ...props, theme });
-        }
-        return acc + str + (interpolation || "");
-      }, "");
 
-      const styles = parseStyles(css, props);
-      const className = `css-${generateRandomString(10)}`;
-      const styleString = `.${className} { ${generateStyleString(styles)} }`;
-      styleSheetManager.addStyle(styleString);
+      const uniqueId = generateRandomString(10);
+
+      // Memoize the styles
+      const memoizedStyles = useMemo(() => {
+        const css = strings.reduce((acc, str, i) => {
+          const interpolation = interpolations[i];
+          if (typeof interpolation === 'function') {
+            return acc + str + interpolation({ ...props, theme });
+          }
+          return acc + str + (interpolation || '');
+        }, '');
+
+        return parseStyles(css, props);
+      }, [props, theme]);
+
+      const className = `css-${uniqueId}`;
+      const styleString = `.${className} { ${generateStyleString(
+        memoizedStyles
+      )} }`;
+
+      // Add the style to the style sheet
+      useIsomorphicLayoutEffect(() => {
+        styleSheetManager.addStyle(styleString);
+      }, [styleString]);
 
       const validProps = Object.keys((tag as any).propTypes || {});
 
@@ -143,12 +158,12 @@ const styled: StyledFunction = <P extends object>(
       }>(
         (acc, [key, value]) => {
           if (
-            key !== "children" &&
+            key !== 'children' &&
             !validElementProps.includes(key) &&
-            !key.startsWith("data-") &&
+            !key.startsWith('data-') &&
             !validProps.includes(key)
           ) {
-            if (typeof value === "function") {
+            if (typeof value === 'function') {
               acc.remainingProps[key] = value;
             } else {
               acc.prefixedProps[`data-${key.toLowerCase()}`] = value;
@@ -161,12 +176,9 @@ const styled: StyledFunction = <P extends object>(
         { prefixedProps: {}, remainingProps: {} }
       );
 
-      const sc = `sc-${
-        typeof tag === "string" ? tag : tag.displayName || "Component"
-      }`;
-      const combinedClassName = `${className} ${props.className || sc}`;
+      const combinedClassName = cls(tag, className, props);
 
-      if (typeof tag === "string") {
+      if (typeof tag === 'string') {
         return React.createElement(tag, {
           ...prefixedProps,
           ...remainingProps,
