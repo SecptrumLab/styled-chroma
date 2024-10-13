@@ -20,7 +20,8 @@
   ],
   "scripts": {
     "build": "rollup -c",
-    "postbuild": "copyfiles -u 1 src/types/**/* dist/",
+    "insert-client": "node scripts/insertUseClient.cjs",
+    "postbuild": "copyfiles -u 1 src/types/**/* dist/ && npm run insert-client",
     "prerelease": "npx tsc --noEmit",
     "release": "npm version patch && git push origin main --follow-tags"
   },
