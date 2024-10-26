@@ -4,8 +4,8 @@ import { StandardProperties } from "./types";
 import { useTheme } from "./hooks/useTheme";
 import { generateRandomString } from "./utils/genString";
 import { validElementProps } from "./utils/props";
-import { styleSheetManager } from "./utils/SSR-Sheet";
 import { cls } from "./utils/className";
+import { styleSheetManager } from "./utils/StyleSheetManger";
 
 type ExtendedProperties = StandardProperties & {
   [key: string]: ExtendedProperties | string | number | undefined;
