@@ -1,7 +1,7 @@
 {
   "name": "styled-chroma",
-  "version": "0.1.68",
-  "description": "A cutting-edge styling library for React that brings simplicity and power to your component design",
+  "version": "0.1.69",
+  "description": "A flexible styling library for React that brings simplicity and power to your component design",
   "type": "module",
   "main": "dist/styled-chroma.cjs.js",
   "module": "dist/styled-chroma.es.js",
@@ -56,7 +56,6 @@
     "rollup-plugin-visualizer": "^5.12.0",
     "typescript": "^5.6.2"
   },
-  "dependencies": {},
   "peerDependencies": {
     "react": ">= 18.0.0",
     "react-dom": ">= 18.0.0"

@@ -4,7 +4,7 @@
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/a71166b5-8c14-4c83-8cb8-0ca17478bde2" alt="Styled Chroma Logo" width="200" height="200">
-  <h4> A cutting-edge styling library for React that brings simplicity and power to your component design </h4>
+  <h4> A flexible styling library for React that brings simplicity and power to your component design </h4>
 </p>
 
 [![GitHub stars](https://img.shields.io/github/stars/SecptrumLab/styled-chroma.svg?style=social&label=Star)](https://github.com/SecptrumLab/styled-chroma)
