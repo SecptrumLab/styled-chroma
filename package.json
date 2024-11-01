@@ -1,6 +1,6 @@
 {
   "name": "styled-chroma",
-  "version": "0.1.72",
+  "version": "0.1.76",
   "description": "A flexible styling library for React that brings simplicity and power to your component design",
   "type": "module",
   "main": "dist/styled-chroma.cjs.js",
@@ -20,7 +20,6 @@
   ],
   "scripts": {
     "build": "rollup -c",
-    "insert-client": "node scripts/insertUseClient.cjs",
     "postbuild": "copyfiles -u 1 src/types/**/* dist/",
     "prerelease": "npx tsc --noEmit",
     "release": "npm version patch && git push origin main --follow-tags"
@@ -46,12 +45,12 @@
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.3.0",
-    "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.0",
     "@types/react": "^18.3.11",
     "copyfiles": "^2.4.1",
     "rollup": "^4.24.0",
     "rollup-plugin-delete": "^2.1.0",
+    "rollup-plugin-esbuild": "^6.1.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-visualizer": "^5.12.0",
     "typescript": "^5.6.2"
@@ -59,5 +58,8 @@
   "peerDependencies": {
     "react": ">= 18.0.0",
     "react-dom": ">= 18.0.0"
+  },
+  "dependencies": {
+    "csstype": "^3.1.3"
   }
 }

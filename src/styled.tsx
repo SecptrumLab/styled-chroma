@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useMemo } from "react";
-import { StandardProperties } from "./types";
 import { useTheme } from "./hooks/useTheme";
 import { generateRandomString } from "./utils/genString";
 import { validElementProps } from "./utils/props";
 import { cls } from "./utils/className";
 import { styleSheetManager } from "./utils/StyleSheetManger";
+import { createState } from "./utils/state";
+import { StandardProperties } from "csstype";
 
 type ExtendedProperties = StandardProperties & {
   [key: string]: ExtendedProperties | string | number | undefined;
@@ -124,6 +125,17 @@ const styled: StyledFunction = <P extends object>(
       const { theme } = useTheme();
 
       const uniqueId = generateRandomString(10);
+      const initailState = {
+        className: "",
+      };
+
+      const state = createState(initailState, [
+        {
+          action: (state) => {
+            state.className = uniqueId;
+          },
+        },
+      ]);
 
       // Memoize the styles
       const memoizedStyles = useMemo(() => {
@@ -138,7 +150,7 @@ const styled: StyledFunction = <P extends object>(
         return parseStyles(css, props);
       }, [props, theme]);
 
-      const className = `css-${uniqueId}`;
+      const className = `css-${state.className}`;
       const styleString = `.${className} { ${generateStyleString(
         memoizedStyles
       )} }`;

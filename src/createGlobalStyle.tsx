@@ -1,8 +1,8 @@
 import React from "react";
 import css from "./utils/css";
-import { useTheme } from "./hooks/useTheme"; // Import useTheme if you're using styled-components for theming
 import { styleSheetManager } from "./utils/StyleSheetManger";
 import { Theme } from "./types/local";
+import { useTheme } from "./hooks/useTheme";
 
 /**
  * Creates a global style by injecting CSS into the document's head.

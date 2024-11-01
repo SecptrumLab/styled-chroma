@@ -51,7 +51,3 @@ We use GitHub issues to track public bugs. Report a bug by [opening a new issue]
 ## License
 
 By contributing, you agree that your contributions will be licensed under its Apache License 2.0.
-
-## References
-
-This document was adapted from the open-source contribution guidelines for [Facebook's Draft](https://github.com/facebook/draft-js/blob/main/CONTRIBUTING.md)

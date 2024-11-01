@@ -4,7 +4,7 @@ class StyleSheetManager {
   private styleSheet: CSSStyleSheet | null = null;
 
   constructor() {
-    this.isServer = typeof window === "undefined";
+    this.isServer = typeof global?.window === "undefined";
     if (!this.isServer) {
       this.initBrowserStyleSheet();
     }
@@ -70,7 +70,7 @@ class StyleSheetManager {
   }
 
   private initBrowserStyleSheet(): void {
-    if (typeof document !== "undefined") {
+    if (typeof global?.document !== "undefined") {
       const style = document.createElement("style");
       document.head.appendChild(style);
       this.styleSheet = style.sheet;

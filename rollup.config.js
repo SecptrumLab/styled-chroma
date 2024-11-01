@@ -1,12 +1,12 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
-import terser from '@rollup/plugin-terser';
 import babel from '@rollup/plugin-babel';
 import PeerDepsExternalPlugin from 'rollup-plugin-peer-deps-external';
 import del from 'rollup-plugin-delete';
 import { readFileSync } from 'fs';
 import { visualizer } from 'rollup-plugin-visualizer';
+import esbuild from 'rollup-plugin-esbuild';
 const pkg = JSON.parse(
   readFileSync(new URL('./package.json', import.meta.url), 'utf8')
 );
@@ -53,20 +53,10 @@ export default {
       exclude: 'node_modules/**',
       babelHelpers: 'bundled',
     }),
-    // Minify the output
-    terser({
-      compress: {
-        drop_console: true,
-        passes: 10,
-        keep_infinity: true,
-        pure_getters: true,
-      },
-      format: {
-        wrap_func_args: false,
-        preserve_annotations: true,
-      },
+    esbuild({
+      minify: true,
     }),
     visualizer({ open: true, filename: 'bundle-analysis.html' }),
   ],
-  external: ['react', 'react-dom', 'react/jsx-runtime'],
+  external: ['react', 'react-dom'],
 };
